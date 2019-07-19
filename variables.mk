@@ -125,10 +125,9 @@ HARNESS_SMEMS_FILE ?= $(build_dir)/$(long_name).harness.mems.v
 HARNESS_SMEMS_CONF ?= $(build_dir)/$(long_name).harness.mems.conf
 HARNESS_SMEMS_FIR  ?= $(build_dir)/$(long_name).harness.mems.fir
 
-sim_files                  ?= $(build_dir)/sim_files.f
-sim_top_blackboxes         ?= $(build_dir)/firrtl_black_box_resource_files.top.f
-sim_harness_blackboxes     ?= $(build_dir)/firrtl_black_box_resource_files.harness.f
-sim_common_files           ?= $(build_dir)/sim_files.common.f
+sim_files          ?= $(build_dir)/sim_files.f
+sim_blackboxes     ?= $(build_dir)/firrtl_black_box_resource_files.sim.f
+sim_common_files   ?= $(build_dir)/sim_files.common.f
 
 #########################################################################################
 # java arguments used in sbt
