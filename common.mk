@@ -47,13 +47,13 @@ $(FIRRTL_FILE) $(ANNO_FILE): $(SCALA_SOURCES) $(sim_files)
 # create verilog files rules and variables
 #########################################################################################
 REPL_SEQ_MEM = --infer-rw --repl-seq-mem -c:$(MODEL):-o:$(TOP_SMEMS_CONF)
-HARNESS_REPL_SEQ_MEM = -thconf $(HARNESS_SMEMS_CONF)
+HARNESS_CONF_FLAGS = -thconf $(HARNESS_SMEMS_CONF)
 
 TOP_TARGETS = $(TOP_FILE) $(TOP_SMEMS_CONF) $(TOP_ANNO) $(TOP_FIR)
 HARNESS_TARGETS = $(HARNESS_FILE) $(HARNESS_SMEMS_CONF) $(HARNESS_ANNO) $(HARNESS_FIR)
 
 $(TOP_TARGETS) $(HARNESS_TARGETS) $(sim_blackboxes): $(FIRRTL_FILE) $(ANNO_FILE)
-	cd $(base_dir) && $(SBT) "project tapeout" "runMain barstools.tapeout.transforms.GenerateTopAndHarness -o $(TOP_FILE) -tho $(HARNESS_FILE) -i $(FIRRTL_FILE) --syn-top $(TOP) --harness-top $(VLOG_MODEL) -faf $(ANNO_FILE) -tsaof $(TOP_ANNO) -tsf $(TOP_FIR) -thaof $(HARNESS_ANNO) -thf $(HARNESS_FIR) $(REPL_SEQ_MEM) $(HARNESS_REPL_SEQ_MEM) -td $(build_dir)"
+	cd $(base_dir) && $(SBT) "project tapeout" "runMain barstools.tapeout.transforms.GenerateTopAndHarness -o $(TOP_FILE) -tho $(HARNESS_FILE) -i $(FIRRTL_FILE) --syn-top $(TOP) --harness-top $(VLOG_MODEL) -faf $(ANNO_FILE) -tsaof $(TOP_ANNO) -tsf $(TOP_FIR) -thaof $(HARNESS_ANNO) -thf $(HARNESS_FIR) $(REPL_SEQ_MEM) $(HARNESS_CONF_FLAGS) -td $(build_dir)"
 	grep -v ".*\.h" $(build_dir)/firrtl_black_box_resource_files.f > $(sim_blackboxes)
 
 # This file is for simulation only. VLSI flows should replace this file with one containing hard SRAMs
